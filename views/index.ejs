@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice generator</title>
+    <style>
+        #cont1 {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 30px;
+        }
+
+        #cont2,
+        #cont3,
+        #cont4 {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        table,
+        thead,
+        th {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        table,
+        tbody,
+        tr,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+    <% let info=information[(information.length)-1] %>
+        <div id="cont1">
+            <div id="container1">
+                <h3>Raven Technolabs&nbsp;</h3>
+                <span>office-802, Rajhans Tower,</span>
+                <br>
+                <span>B/H Shreyash Trade Center,</span>
+                <br>
+                <span>Varachha Road, Surat-395006</span>
+                <br>
+                <br>
+                <span>+91 8469536960</span>
+                <br>
+                <span>raventechnolabs@gmail.com</span>
+            </div>
+            <div id="container2">
+                <h1>INVOICE</h1>
+                <% let months = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+              ]; %>
+                <% let day=new Date().getDate() %>
+                <% let month=months[new Date().getMonth()] %>
+                <% let year=new Date().getFullYear() %>
+                <span><%= day %>-<%= month %>-<%= year %></span>
+                <br>
+                <span>Invoice #<%= information.length %></span>
+                <br>
+                <br>
+                <span><b>Att: <%= info.name %></b></span>
+                <br>
+                <span><b><%= info.company %></b></span>
+            </div>
+        </div>
+        <hr>
+        <div id="cont2">
+            <div id="container3">
+                <p>Dear <%= info.name %>,</p>
+                <span>Please find below a cost-breakdown for the recent work completed. Please make payment at your
+                    earliest
+                    convinience, and do not hesitate to contact me with any questions.</span>
+                <br>
+                <br>
+                <span>Many thanks,</span>
+                <br>
+                <span>Raven Technolabs</span>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div id="cont3">
+            <table>
+                <thead>
+                    <th style="padding-right:30px;">#</th>
+                    <th style="padding-right:75px;">Item Description</th>
+                    <th style="padding-right:40px;">Quantity</th>
+                    <th style="padding-right:40px;">Unit price</th>
+                    <th style="padding-right:40px;">Total</th>
+                </thead>
+                <tbody>
+                    <% for (let i=0;i<info.items.length;i++) { %>
+                    <tr>
+                        <td><%= (i+1) %></td>
+                        <td><%= info.items[i].item %></td>
+                        <td><%= info.items[i].quantity %></td>
+                        <td>30000.00</td>
+                        <td><%= 30000*parseInt(info.items[i].quantity) %>.00</td>
+                    </tr>
+                <% } %>
+                <% for (let i=info.items.length;i<7;i++) { %>
+                    <tr>
+                        <td><%= (i+1) %></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                    </tr>
+                <% } %>
+                <% let sum=0 %>
+                <% for (let i=0;i<info.items.length;i++) { %>
+                    <% sum+=30000*parseInt(info.items[i].quantity) %>
+                <% } %>
+                    <tr>
+                        <td colspan="4"><b>Subtotal</b></td>
+                        <td><b><%= sum %>.00</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"></td>
+                        <td><b>0.00</b></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4"><b>Total</b></td>
+                        <td><b><%= sum %>.00</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div id="cont4">
+            <div id="container4">
+                <span>Many thanks to your custom! I look forward to doing business with you again in due course.</span>
+                <br>
+                <br>
+                <span>Payment terms : to be received within 60 days.</span>
+            </div>
+        </div>
+        <button style="margin-left:650px; margin-top:30px;" type="button" id="btn" onclick="window.print()">Download invoice</button>
+</body>
+</html>
